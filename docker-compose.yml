@@ -1,0 +1,74 @@
+services:
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    volumes:
+      - ./src:/app/src
+      - ./node_modules:/app/node_modules
+    command: bun run --watch src/index.ts
+    restart: unless-stopped
+    networks:
+      - mcp-network
+    stdin_open: true
+    tty: true
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    memswap_limit: 512m
+    cpus: 1.0
+
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    command: bun test
+    volumes:
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./node_modules:/app/node_modules
+    networks:
+      - mcp-network
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    memswap_limit: 512m
+    cpus: 1.0
+
+  build-test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      cache_from:
+        - mcp-filesystem-pro-builder
+    command: bun install && bun run build && bun test
+    networks:
+      - mcp-network
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 1g
+    memswap_limit: 1g
+    cpus: 2.0
+
+  lint:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    working_dir: /app
+    command: bun run build:check
+    volumes:
+      - ./src:/app/src
+      - ./node_modules:/app/node_modules
+    networks:
+      - mcp-network
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    memswap_limit: 512m
+    cpus: 1.0
+
+networks:
+  mcp-network:
+    driver: bridge

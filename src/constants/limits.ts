@@ -1,0 +1,10 @@
+export const SEARCH_LIMITS = {
+  MAX_FILES_TO_SEARCH: 100,
+  DEFAULT_MAX_RESULTS: 50,
+  DEFAULT_CONTEXT_LINES: 2,
+} as const;
+
+export const PROJECT_LIMITS = {
+  MAX_DEPTH: 3,
+  MAX_ENTRIES_PER_DIR: 20,
+} as const;
