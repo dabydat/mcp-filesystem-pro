@@ -7,8 +7,18 @@
   "bin": {
     "mcp-filesystem-pro": "./dist/index.js"
   },
-  "files": ["dist/", "README.md", "SECURITY.md"],
-  "keywords": ["mcp", "model-context-protocol", "claude", "ai-agent", "filesystem"],
+  "files": [
+    "dist/",
+    "README.md",
+    "SECURITY.md"
+  ],
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "claude",
+    "ai-agent",
+    "filesystem"
+  ],
   "license": "MIT",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
@@ -19,14 +29,15 @@
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "1.29.0",
-    "simple-git": "^3.3.0",
     "diff": "^7.0.0",
-    "zod": "^3.22.0",
-    "glob": "^10.3.0"
+    "glob": "^10.3.0",
+    "simple-git": "^3.3.0",
+    "zod": "^3.22.0"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.5"
   },
   "engines": {
     "node": ">=20"
