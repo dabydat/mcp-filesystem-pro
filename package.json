@@ -1,6 +1,6 @@
 {
   "name": "mcp-filesystem-pro",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Production-grade MCP server for filesystem and git operations",
   "type": "module",
   "types": "dist/index.d.ts",

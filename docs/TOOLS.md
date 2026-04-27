@@ -1,6 +1,6 @@
 # Tools Documentation — mcp-filesystem-pro
 
-18 tools across 3 modules.
+40 tools across 4 modules.
 
 ## Filesystem Module (8 tools)
 

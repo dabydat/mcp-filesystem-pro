@@ -1,13 +1,26 @@
 # mcp-filesystem-pro
 
-Production-grade MCP server for filesystem, git, and HTTP operations — 26 tools for AI agents.
+Production-grade MCP server for filesystem, git, project analysis, and HTTP operations — 40 tools for AI agents.
 
 [![CI](https://github.com/dabydat/mcp-filesystem-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/dabydat/mcp-filesystem-pro/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/mcp-filesystem-pro.svg)](https://www.npmjs.com/package/mcp-filesystem-pro)
 
 ## Overview
 
-mcp-filesystem-pro is a Model Context Protocol server that provides secure filesystem, git, and HTTP operations for AI agents. All operations are scoped to a configured root directory via AllowlistGuard security.
+mcp-filesystem-pro is a Model Context Protocol server that provides secure filesystem, git, project analysis, and HTTP operations for AI agents. All operations are scoped to a configured root directory via AllowlistGuard security.
+
+## What's New in v1.1.0
+
+**HTTP Client Module** — 22 tools for making authenticated, secure HTTP requests from AI agents.
+
+Key capabilities:
+- Full REST API coverage: GET, POST, PUT, DELETE, PATCH, HEAD
+- Authentication: API key, Bearer token, Basic auth
+- Custom headers and query parameters
+- URL allowlisting for security
+- Response parsing (JSON, text, status codes, headers)
+
+All HTTP operations support the same security model as filesystem operations, including URL allowlisting to prevent SSRF attacks.
 
 ## Quick Start
 
@@ -81,7 +94,7 @@ Add to `claude_desktop_config.json`:
 | `project_summary` | Project overview and statistics |
 | `read_agents_md` | Parse .claude/AGENTS.md |
 
-### HTTP (17 tools)
+### HTTP (22 tools)
 
 | Tool | Description |
 |------|-------------|
