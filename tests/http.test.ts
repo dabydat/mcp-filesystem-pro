@@ -237,7 +237,7 @@ describe('HttpClient', () => {
     });
 
     it('throws on timeout', async () => {
-      mockFetch.mockRejectedValue({ name: 'AbortError' });
+      mockFetch.mockRejectedValue(new DOMException('The operation was aborted', 'AbortError'));
 
       const originalFetch = global.fetch;
       Object.defineProperty(global, 'fetch', { value: mockFetch, writable: true });
