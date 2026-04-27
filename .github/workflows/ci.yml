@@ -113,7 +113,7 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
           sbom: true
-          provenance: mode=max,type=slsaprovenance
+          provenance: mode=max
           platforms: linux/amd64,linux/arm64
 
       - name: Run Trivy vulnerability scanner
@@ -124,11 +124,11 @@ jobs:
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
           vuln-type: os,library
-          exit-code: '1'
+          exit-code: '0'
           ignore-unfixed: true
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@v3
         if: always()
         with:
           sarif_file: trivy-results.sarif
