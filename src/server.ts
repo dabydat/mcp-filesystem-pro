@@ -3,6 +3,7 @@ import { AllowlistGuard } from './security/allowlist.js';
 import { createFilesystemModule } from './modules/filesystem/index.js';
 import { createGitModule } from './modules/git/index.js';
 import { createProjectModule } from './modules/project/index.js';
+import { createHttpModule } from './modules/http/index.js';
 
 export function createServer(rootDir: string, guard?: AllowlistGuard): McpServer {
   const allowlistGuard = guard ?? new AllowlistGuard([rootDir]);
@@ -15,6 +16,7 @@ export function createServer(rootDir: string, guard?: AllowlistGuard): McpServer
   createFilesystemModule(server, allowlistGuard, rootDir);
   createGitModule(server, allowlistGuard, rootDir);
   createProjectModule(server, allowlistGuard, rootDir);
+  createHttpModule(server, allowlistGuard, rootDir);
 
   return server;
 }

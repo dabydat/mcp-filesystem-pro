@@ -31,6 +31,8 @@ RUN bun install --production \
 
 COPY --from=builder --chown=app:app /app/dist ./dist
 COPY --from=builder --chown=app:app /app/node_modules ./node_modules
+COPY --from=builder --chown=app:app /app/tests ./tests
+COPY --from=builder --chown=app:app /app/src ./src
 
 USER app
 

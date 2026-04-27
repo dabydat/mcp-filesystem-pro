@@ -1,13 +1,13 @@
 # mcp-filesystem-pro
 
-Production-grade MCP server for filesystem and git operations — 18 tools for AI agents.
+Production-grade MCP server for filesystem, git, and HTTP operations — 26 tools for AI agents.
 
 [![CI](https://github.com/dabydat/mcp-filesystem-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/dabydat/mcp-filesystem-pro/actions/workflows/ci.yml)
 [![npm version](https://img.shields.io/npm/v/mcp-filesystem-pro.svg)](https://www.npmjs.com/package/mcp-filesystem-pro)
 
 ## Overview
 
-mcp-filesystem-pro is a Model Context Protocol server that provides secure filesystem and git operations for AI agents. All operations are scoped to a configured root directory via AllowlistGuard security.
+mcp-filesystem-pro is a Model Context Protocol server that provides secure filesystem, git, and HTTP operations for AI agents. All operations are scoped to a configured root directory via AllowlistGuard security.
 
 ## Quick Start
 
@@ -80,6 +80,33 @@ Add to `claude_desktop_config.json`:
 | `find_config_files` | Locate project configuration files |
 | `project_summary` | Project overview and statistics |
 | `read_agents_md` | Parse .claude/AGENTS.md |
+
+### HTTP (17 tools)
+
+| Tool | Description |
+|------|-------------|
+| `http_get` | Make GET request |
+| `http_post` | Make POST request |
+| `http_put` | Make PUT request |
+| `http_delete` | Make DELETE request |
+| `http_patch` | Make PATCH request |
+| `http_head` | Make HEAD request |
+| `http_set_auth_api_key` | Set API key authentication |
+| `http_set_auth_bearer` | Set bearer token authentication |
+| `http_set_auth_basic` | Set basic authentication |
+| `http_clear_auth` | Clear all authentication |
+| `http_set_headers` | Set custom headers |
+| `http_clear_headers` | Clear custom headers |
+| `http_set_timeout` | Set request timeout |
+| `http_parse_json` | Parse JSON string |
+| `http_parse_text` | Return text as-is |
+| `http_get_response_headers` | Get last response headers |
+| `http_get_status_code` | Get last status code |
+| `http_add_query_param` | Store query parameter |
+| `http_validate_url` | Validate URL security |
+| `http_add_url_allowlist` | Add URL to allowlist |
+| `http_remove_url_allowlist` | Remove URL from allowlist |
+| `http_list_allowlist` | List all allowlist patterns |
 
 ## Architecture
 
