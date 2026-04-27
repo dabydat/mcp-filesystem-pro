@@ -101,8 +101,6 @@ jobs:
           images: ghcr.io/${{ github.repository }}
           tags: |
             type=sha,prefix=,suffix=,format=short
-            type=ref,event=branch
-            type=semver,pattern={{version}}
 
       - name: Build and push with SBOM and provenance
         uses: docker/build-push-action@v5
@@ -120,15 +118,13 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.IMAGE_TAG }}
+          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
           vuln-type: os,library
           exit-code: '0'
           ignore-unfixed: true
-        env:
-          IMAGE_TAG: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
       - name: Upload Trivy results to GitHub Security
         uses: github/codeql-action/upload-sarif@v4
