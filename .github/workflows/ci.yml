@@ -115,10 +115,13 @@ jobs:
           provenance: mode=max
           platforms: linux/amd64,linux/arm64
 
+      - name: Set short SHA
+        run: echo "SHORT_SHA=${GITHUB_SHA:0:7}" >> $GITHUB_ENV
+
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          image-ref: ghcr.io/${{ github.repository }}:${{ env.SHORT_SHA }}
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
@@ -135,4 +138,4 @@ jobs:
       - name: Image digest
         run: |
           echo "Image pushed successfully"
-          docker buildx imagetools inspect ghcr.io/${{ github.repository }}:${{ github.sha }} || true
+          docker buildx imagetools inspect ghcr.io/${{ github.repository }}:${{ env.SHORT_SHA }} || true
