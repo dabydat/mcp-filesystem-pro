@@ -80,6 +80,7 @@ jobs:
       packages: write
       attestations: write
       id-token: write
+      security-events: write
     steps:
       - uses: actions/checkout@v4
 
@@ -119,16 +120,18 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          image-ref: ${{ env.IMAGE_TAG }}
           format: sarif
           output: trivy-results.sarif
           severity: CRITICAL,HIGH
           vuln-type: os,library
           exit-code: '0'
           ignore-unfixed: true
+        env:
+          IMAGE_TAG: ghcr.io/${{ github.repository }}:${{ github.sha }}
 
       - name: Upload Trivy results to GitHub Security
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
         with:
           sarif_file: trivy-results.sarif
