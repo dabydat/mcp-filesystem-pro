@@ -2,37 +2,48 @@
 
 Production-grade MCP server for filesystem and git operations — 18 tools for AI agents.
 
+[![CI](https://github.com/dabydat/mcp-filesystem-pro/actions/workflows/ci.yml/badge.svg)](https://github.com/dabydat/mcp-filesystem-pro/actions/workflows/ci.yml)
+[![npm version](https://img.shields.io/npm/v/mcp-filesystem-pro.svg)](https://www.npmjs.com/package/mcp-filesystem-pro)
+
+## Overview
+
+mcp-filesystem-pro is a Model Context Protocol server that provides secure filesystem and git operations for AI agents. All operations are scoped to a configured root directory via AllowlistGuard security.
+
 ## Quick Start
 
+### Install
+
 ```bash
-# Install
 npm install -g mcp-filesystem-pro
-
-# Run as MCP server (stdio mode)
-mcp-filesystem-pro
-
-# Start in dev mode with inspector
-bun run dev
 ```
 
-## Architecture
+### Run as MCP Server
 
+```bash
+# Run with default /tmp root
+mcp-filesystem-pro /tmp
+
+# Run with custom root directory
+mcp-filesystem-pro /path/to/project
 ```
-mcp-filesystem-pro/
-├── src/
-│   ├── index.ts              # CLI entry point
-│   ├── server.ts             # MCP server factory
-│   ├── modules/
-│   │   ├── filesystem/      # 8 tools: read, write, diff, search, list
-│   │   ├── git/             # 6 tools: status, diff, log, add, commit, branch
-│   │   └── project/         # 4 tools: detect_stack, summary, find_config, read_agents_md
-│   ├── security/
-│   │   └── allowlist.ts     # Path validation + path traversal blocking
-│   └── types/index.ts
-├── tests/                    # Bun test suite
-└── docs/
-    ├── TOOLS.md              # Detailed tool documentation
-    └── SECURITY.md           # Security model
+
+### Docker
+
+```bash
+docker run -v /path/to/project:/project ghcr.io/dabydat/mcp-filesystem-pro /project
+```
+
+### Claude Desktop
+
+Add to `claude_desktop_config.json`:
+
+```json
+{
+  "mcpFilesystemPro": {
+    "command": "mcp-filesystem-pro",
+    "args": ["/path/to/allowed/directory"]
+  }
+}
 ```
 
 ## Tools
@@ -70,9 +81,34 @@ mcp-filesystem-pro/
 | `project_summary` | Project overview and statistics |
 | `read_agents_md` | Parse .claude/AGENTS.md |
 
+## Architecture
+
+```
+mcp-filesystem-pro/
+├── src/
+│   ├── index.ts              # CLI entry point
+│   ├── server.ts             # MCP server factory
+│   ├── modules/
+│   │   ├── filesystem/       # 8 tools: read, write, diff, search, list
+│   │   ├── git/              # 6 tools: status, diff, log, add, commit, branch
+│   │   └── project/          # 4 tools: detect_stack, summary, find_config
+│   ├── security/
+│   │   └── allowlist.ts      # Path validation + path traversal blocking
+│   └── types/                # Result types
+├── tests/                    # Bun test suite (75 tests)
+└── docs/
+    ├── TOOLS.md              # Detailed tool documentation
+    └── SECURITY.md            # Security model
+```
+
 ## Security
 
 **Path Allowlisting:** All file operations are scoped to an allowed root directory. Path traversal attacks (`../..`, symlinks) are blocked.
+
+**Blocked Paths:**
+- `/etc/`, `/root/`, `~/.ssh/`
+- `.env` files
+- `/proc/`, `/sys/`
 
 **Input Sanitization:** All tool inputs are validated against the allowlist before any filesystem operation.
 
@@ -86,6 +122,9 @@ bun install
 
 # Build
 bun run build
+
+# Type check
+bun run build:check
 
 # Test
 bun test
