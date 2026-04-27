@@ -214,10 +214,11 @@ export class HttpClient {
   }
 
   private createError(error: unknown): Error {
+    const errorObj = error as Record<string, unknown>;
+    if (errorObj?.name === 'AbortError' || (error as Error)?.name === 'AbortError') {
+      return new Error(`${HTTP_ERROR_PREFIX.HTTP_TIMEOUT}: Request timed out after ${this.timeout}ms`);
+    }
     if (error instanceof Error) {
-      if (error.name === 'AbortError') {
-        return new Error(`${HTTP_ERROR_PREFIX.HTTP_TIMEOUT}: Request timed out after ${this.timeout}ms`);
-      }
       return new Error(`${HTTP_ERROR_PREFIX.HTTP_NETWORK_ERROR}: ${error.message}`);
     }
     return new Error(`${HTTP_ERROR_PREFIX.HTTP_REQUEST_FAILED}: ${String(error)}`);
