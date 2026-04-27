@@ -7,3 +7,5 @@ dist/
 .env.*
 !.env.example
 project-docs/
+sprints/
+prompts/
